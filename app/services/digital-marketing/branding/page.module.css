@@ -1,0 +1,25 @@
+@media (min-width: 900px) and (max-width: 1450px) {
+    
+    .customCard{
+        height: 500px;
+    }
+    .customMtop{
+        margin-top: 72px;
+    }
+}
+
+@media  (min-width: 1450px) {
+    
+    .customCard{
+        height: 438px;
+    }
+     .customMtop{
+        margin-top:0px ;
+    }
+}
+
+.custom-shadow {
+  box-shadow: 0 8px 30px rgba(114, 114, 114, 0.15); /* full soft shadow all around */
+  border-radius: 0px; /* optional: rounded corners */
+  background: #ffffff; /* make sure background is white so shadow is visible */
+}

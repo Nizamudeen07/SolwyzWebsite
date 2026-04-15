@@ -1,0 +1,27 @@
+.our-service {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10rem 5rem;
+  min-height: 150vh;
+  background: #111;
+  color: white;
+}
+
+.our-service .content {
+  width: 60%;
+}
+
+.vertical-line-container {
+  position: relative;
+  width: 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.vertical-line {
+  width: 4px;
+  background: #ff4081;
+  height: 0; /* Initial height is zero for animation */
+}

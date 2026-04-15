@@ -1,0 +1,54 @@
+.slider-container-Client {
+    width: 100%;
+    overflow: hidden;           /* ensures slider content stays inside */
+    border-radius: 32px;        /* same as your card border radius */
+}
+
+/* Keep slide padding */
+.slider-container-Client .slick-slide {
+    padding: 0 12px;
+}
+
+/* Remove fixed height → let content decide height */
+.slider-container-Client .slick-list {
+    margin: 0 32px;
+    overflow: hidden;           /* clip overflowing child elements */
+}
+
+/* Remove hard height (causing overflow) */
+.slick-list {
+    padding-top: 40px;
+    height: auto;               /* let it grow naturally */
+}
+
+/* Center each testimonial card */
+.testimonial-card {
+    width: 384px;
+    margin: 0 auto;
+}
+
+/* Dots styling */
+.slick-dots li button:before {
+  color: white !important;
+  opacity: 0.5;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: white !important;
+}
+
+.slick-dots {
+  bottom: -30px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .slider-container-Client .slick-slide {
+      padding: 0 12px;
+  }
+
+  .slider-container-Client .slick-list {
+      margin: 0;
+  }
+}

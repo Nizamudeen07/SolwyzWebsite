@@ -1,0 +1,52 @@
+/* .custom-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #04A391;
+  transition: width 0.3s ease;
+  
+}
+
+.custom-underline:hover::after {
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.lens {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 104px;
+  border-radius: 80px;
+  border: 2px solid rgba(255, 255, 255, 0.4); 
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  mix-blend-mode: screen;
+  backdrop-filter: blur(2px);
+  z-index: 20;
+  opacity: 1;
+  transition: transform 0.1s ease;
+}
+
+
+
+
+
+
+ */
+
+ .gradient-text {
+  background: linear-gradient(to right, #9f5ca0, #42a398, #00AE9A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}

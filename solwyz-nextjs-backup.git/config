@@ -1,0 +1,8 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = https://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@github.com/Solwyz/solwyz-nextjs.git
+	fetch = +refs/*:refs/*
+	mirror = true

@@ -1,0 +1,7 @@
+@media (min-width: 900px) and (max-width: 1450px) {
+    
+    .customPadding{
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
