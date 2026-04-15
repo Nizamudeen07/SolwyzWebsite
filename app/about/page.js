@@ -1,6 +1,6 @@
 "use client";
 
-import AboutPage from "../Services/AboutPage/AboutPage";
+import AboutPage from "../services/AboutPage/AboutPage";
 
 
     
