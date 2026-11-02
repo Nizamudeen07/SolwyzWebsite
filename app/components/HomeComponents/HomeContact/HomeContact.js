@@ -1,9 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha";
-import Api from "../../../../Service/Api";
+import { useState } from "react";
 
 export default function HomeContact() {
 
@@ -41,11 +38,7 @@ export default function HomeContact() {
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const recaptchaRef = useRef(null);
-  const [isSent, setIsSent] = useState(false);
-  const router = useRouter();
 
   const validateField = (name, value) => {
     let error = "";
@@ -71,51 +64,6 @@ export default function HomeContact() {
     requiredFields.every((key) => String(formData[key]).trim() !== "") &&
     Object.values(errors).every((err) => err === "");
 
-  const onReCAPTCHAChange = async (token) => {
-    if (!token) {
-      setIsSubmitting(false);
-      setFeedback("reCAPTCHA failed — please try again.");
-      return;
-    }
-
-    const payload = {
-      id: 0,
-      ...formData,
-      budget: parseInt(formData.budget || "0"),
-      createdAt: new Date().toISOString(),
-      recaptchaToken: token,
-    };
-
-    try {
-      const params = new URLSearchParams(payload).toString();
-      const response = await Api.post(`api/contact/create?${params}`);
-      console.log("Success:", response.data);
-      setIsSent(true);
-      setFeedback("Message sent!");
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        websiteLink: "",
-        phone: "",
-        service: "",
-        budget: "",
-        message: "",
-      });
-
-      // ✅ Redirect to ThankYouPage
-      router.push("/thank-you");
-    } catch (err) {
-      console.error("Error sending form data:", err);
-      setFeedback("Error sending message. Try again later.");
-    } finally {
-      setIsSubmitting(false);
-      if (recaptchaRef.current) recaptchaRef.current.reset();
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setFeedback("");
@@ -123,13 +71,12 @@ export default function HomeContact() {
       setFeedback("Please fill all fields correctly.");
       return;
     }
-    setIsSubmitting(true);
-    if (recaptchaRef.current) {
-      recaptchaRef.current.execute();
-    } else {
-      setIsSubmitting(false);
-      setFeedback("reCAPTCHA not ready. Refresh the page.");
-    }
+    const subject = encodeURIComponent(`Website enquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nCompany: ${formData.company}\nWebsite: ${formData.websiteLink}\nService: ${formData.service}\nBudget: ${formData.budget}\n\n${formData.message}`
+    );
+    window.location.href = `mailto:info@solwyz.com?subject=${subject}&body=${body}`;
+    setFeedback("Your email app will open with your enquiry ready to send.");
   };
 
   return (
@@ -327,17 +274,13 @@ export default function HomeContact() {
               <div className="pt-6 flex flex-col gap-3">
                 <button
                   type="submit"
-                  disabled={!isFormValid || isSubmitting || isSent}
-                  className={`w-full ${isFormValid && !isSent
+                  disabled={!isFormValid}
+                  className={`w-full ${isFormValid
                       ? "bg-[#04A391] hover:bg-[linear-gradient(270deg,#035249_0%,#04A391_100%)]"
                       : "bg-[#04A391] opacity-50 cursor-not-allowed"
                     } text-white py-3 rounded-md text-base font-medium transition-all duration-300`}
                 >
-                  {isSent
-                    ? "Message Sent ✓"
-                    : isSubmitting
-                      ? "Sending..."
-                      : "Send Message"}
+                Send Message
                 </button>
 
                 {feedback && (
@@ -345,24 +288,6 @@ export default function HomeContact() {
                 )}
               </div>
 
-              {/* Invisible reCAPTCHA */}
-              <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                size="invisible"
-                badge="inline"
-                ref={recaptchaRef}
-                onChange={onReCAPTCHAChange}
-              />
-
-              <style jsx global>{`
-                .grecaptcha-badge {
-                  transform: scale(0.5);
-                  transform-origin: bottom left;
-                  left: 10px;
-                  right: auto;
-                  bottom: 10px;
-                }
-              `}</style>
             </form>
           </div>
         </div>

@@ -5,30 +5,18 @@ import { useRouter } from "next/navigation"; //  Next.js navigation
 import Image from "next/image"; // Optimized Next.js Image
 import Link from "next/link"; //Next.js routing
 import { motion } from "framer-motion";
-import Api from "../../../../Service/Api";
 
 // Assets
 // import forwardArrowGreen from "@assets/arrow_forward (green).svg";
 // import forwardArrow from "@assets/arrow_forward.svg";
 
 export default function LatestBuzz() {
-    const [blogs, setBlogs] = useState([]);
+    const blogs = [];
     const router = useRouter();
 
     const handleBuzzClick = (id) => {
         router.push(`/blogdetails/${id}`);
     };
-
-    useEffect(() => {
-        Api.get("api/blog/all").then((response) => {
-            if (response && response.status === 200) {
-                console.log("Latest buzz fetched successfully:", response.data.data);
-                setBlogs(response.data.data);
-            } else {
-                console.error("Failed to fetch buzz:", response);
-            }
-        });
-    }, []);
 
     return (
         <motion.div

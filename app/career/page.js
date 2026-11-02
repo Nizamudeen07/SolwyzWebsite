@@ -5,21 +5,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation"; // ✅ Next.js
 import Pageloader from "../Loaders/Pageloader";
-import Api from "../../Service/Api";
 
 export default function CareersPage() {
   const words = ["Creativity", "Innovation", "Growth"];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [opacity, setOpacity] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [departments, setDepartments] = useState([]);
+  const [loading] = useState(false);
+  const departments = [];
   const [selectedCategory, setSelectedCategory] = useState("accounts");
   const [selectedDepartmentId, setSelectedDepartmentId] = useState(null);
-  const [openings, setOpenings] = useState([]);
+  const [openings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredOpenings = openings.filter((opening) =>
-    opening.name.toLowerCase().includes(searchTerm.toLowerCase())
+    opening.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const { id } = useParams();
@@ -31,51 +30,6 @@ export default function CareersPage() {
   const handleCareerClick = (id) => {
     router.push(`/careerdeatils/${id}`);
   };
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        const response = await Api.get("api/departments/all");
-        if (response && response.status === 200) {
-          setDepartments(response.data.data);
-          const data = response.data.data;
-          if (data.length > 0) {
-            setSelectedCategory(data[0].name);
-            setSelectedDepartmentId(data[0].id);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-        // Optionally show fallback or empty state
-        setDepartments([]);
-        setSelectedCategory(null);
-        setSelectedDepartmentId(null);
-      }
-    };
-
-    fetchDepartments();
-  }, []);
-  ;
-
-  useEffect(() => {
-    const fetchOpenings = async () => {
-      if (!selectedDepartmentId) return;
-
-      try {
-        const response = await Api.get(`api/designation/${selectedDepartmentId}`);
-        if (response && response.status === 200) {
-          setOpenings(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching openings:", error);
-        setOpenings([]); // fallback to empty
-      }
-    };
-
-    fetchOpenings();
-  }, [selectedDepartmentId]);
-  ;
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       setOpacity(0);
@@ -89,11 +43,6 @@ export default function CareersPage() {
   }, []);
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   if (loading) return <Pageloader />;
 
   return (
@@ -101,7 +50,7 @@ export default function CareersPage() {
       <div className="md:h-[95px] h-[104px]" />
 
       {/* Banner Section */}
-      <h1 className="text-white max-w-[] mx-auto md:justify-start justify-center md:h-[358px] bg-cover md:px-[430px] md:py-[99px] px-[52px] py-[97px]"
+      <div className="text-white max-w-[] mx-auto md:justify-start justify-center md:h-[358px] bg-cover md:px-[430px] md:py-[99px] px-[52px] py-[97px]"
 
         style={{ backgroundImage: "url('/assets/Careers/careers.png')" }}
       >
@@ -161,7 +110,7 @@ export default function CareersPage() {
             </text>
           </svg>
         </div>
-      </h1>
+      </div>
 
       {/* Benefits Section */}
       <div className="max-w-[1440px] mx-auto md:px-[120px] md:py-[104px] px-4 py-8 bg-[#000000] text-white md:text-start text-justify">

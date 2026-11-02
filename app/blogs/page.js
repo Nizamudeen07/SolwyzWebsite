@@ -7,11 +7,10 @@ import { useRouter } from "next/navigation";
 // import arrowForward from "@assets/chevron_forward.svg";
 // import arrowForwardGreen from "@assets/chevron_forward (green).svg";
 import Pageloader from "../Loaders/Pageloader";
-import Api from "../../Service/Api";
 
 function BlogsPage() {
-  const [loading, setLoading] = useState(true);
-  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const blogs = [];
 
   const router = useRouter();
 
@@ -20,23 +19,7 @@ function BlogsPage() {
   };
 
   useEffect(() => {
-    Api.get("api/blog/all").then((response) => {
-      if (response && response.status === 200) {
-        console.log("Blogs fetched successfully:", response.data.data);
-        setBlogs(response.data.data);
-      } else {
-        console.error("Failed to fetch blogs:", response);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     document.title = "Blogs | Solwyz Technologies";
-  }, []);
-
-  useEffect(() => {
-    // Simulate delay
-    setTimeout(() => setLoading(false), 1000);
   }, []);
 
   if (loading) return <Pageloader />;
@@ -106,6 +89,9 @@ function BlogsPage() {
 
         ))}
       </div>
+      {blogs.length === 0 && (
+        <p className="mt-12 text-center text-[#959595]">New stories are coming soon.</p>
+      )}
     </div>
   );
 }

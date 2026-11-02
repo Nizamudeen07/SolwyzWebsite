@@ -98,23 +98,6 @@ export default function OurServices() {
         },
       });
 
-      gsap.fromTo(
-        ".parallax-heading",
-        { opacity: 0, yPercent: 30, scale: 1.2, filter: "blur(10px)" },
-        {
-          opacity: 0.07,
-          yPercent: -10,
-          scale: 1,
-          filter: "blur(0px)",
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top bottom",
-            end: "top top",
-            scrub: true,
-          },
-        }
-      );
     }, cardsRef);
 
     return () => ctx.revert();
